@@ -1,0 +1,9 @@
+@use "./variables.scss" as *;
+
+@mixin card() {
+  background-color: $col-card-bg;
+  box-shadow: $card-shadow;
+  border-radius: 10px;
+  padding: 0.5rem;
+  border: 1px solid $col-border;
+}
