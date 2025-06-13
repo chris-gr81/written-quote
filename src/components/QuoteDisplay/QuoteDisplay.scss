@@ -1,0 +1,19 @@
+.quote-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__quote {
+    font-family: $font-quote;
+    font-size: 2.5rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  &__author {
+    color: $col-text-muted;
+    text-align: center;
+    border-top: 1px solid $col-border;
+    padding: 0.5rem;
+  }
+}

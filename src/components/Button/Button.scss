@@ -1,0 +1,7 @@
+.btn-a {
+  @include button-type-a;
+}
+
+.btn-a-inverse {
+  @include button-type-a-inverse;
+}

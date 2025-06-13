@@ -5,5 +5,47 @@
   box-shadow: $card-shadow;
   border-radius: 10px;
   padding: 0.5rem;
-  border: 1px solid $col-border;
+  border: $card-border;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@mixin displayFrom($widthValue) {
+  @media (min-width: $widthValue) {
+    @content;
+  }
+}
+
+@mixin button-type-a {
+  background-color: $col-btn-a-deep-blue;
+  border: 1px solid $col-btn-a-deep-blue;
+  color: $col-btn-a-text;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: transparent;
+    color: $col-btn-a-deep-blue;
+  }
+}
+
+@mixin button-type-a-inverse {
+  background-color: transparent;
+  border: 1px solid $col-btn-a-deep-blue;
+  color: $col-btn-a-deep-blue;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $col-btn-a-deep-blue;
+    color: $col-btn-a-text;
+  }
 }

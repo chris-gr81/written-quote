@@ -1,5 +1,13 @@
 .app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: $outerMargin;
   width: calc(100vw - $outerMargin);
   padding: 0.5rem;
+  gap: 1rem;
+
+  @include displayFrom(700px) {
+    width: 700px;
+  }
 }
