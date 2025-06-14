@@ -7,7 +7,7 @@ export function QuoteDisplay() {
   const { quote, authorName, link, authorLink } = quoteObj;
   return (
     <div className="quote-display">
-      <p className="quote-display__quote">"{quote}"</p>
+      <p className="quote-display__quote">{quote}</p>
       <p className="quote-display__author">{authorName}</p>
     </div>
   );
