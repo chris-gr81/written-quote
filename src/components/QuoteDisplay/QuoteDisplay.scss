@@ -10,8 +10,10 @@
     text-align: center;
   }
 
-  &__author {
+  &__author,
+  & a {
     color: $col-text-muted;
+    text-decoration: none;
     text-align: center;
     border-top: 1px solid $col-border;
     padding: 0.5rem;

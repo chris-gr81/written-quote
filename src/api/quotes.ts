@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE = "https://api.zitat-service.de";
+import { API_BASE } from "../constants/constants";
 
 type QuoteResponse = {
   quote: string;

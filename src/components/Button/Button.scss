@@ -1,7 +1,22 @@
-.btn-a {
-  @include button-type-a;
+.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  gap: 0.5rem;
+
+  &__a {
+    @include button-type-a;
+  }
+  &__a-inverse {
+    @include button-type-a-inverse;
+  }
+
+  &__b {
+    @include button-type-b;
+  }
 }
 
-.btn-a-inverse {
-  @include button-type-a-inverse;
+.btnIcon {
+  height: 1rem;
 }

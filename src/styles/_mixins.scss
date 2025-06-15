@@ -49,3 +49,19 @@
     color: $col-btn-a-text;
   }
 }
+
+@mixin button-type-b {
+  background-color: $col-btn-b-red;
+  border: 1px solid $col-btn-b-red;
+  color: $col-btn-b-text;
+  border-radius: 6px;
+  padding: 0.6rem 0.6rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $col-btn-b-hover;
+    border-color: $col-btn-b-hover;
+  }
+}

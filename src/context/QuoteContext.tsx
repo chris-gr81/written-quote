@@ -1,6 +1,7 @@
 import React, { createContext, useState, type ReactNode } from "react";
 import { getQuote } from "../api/quotes";
 import type { Quote } from "../types/types";
+import { LOCAL_STORAGE_KEY } from "../constants/constants";
 
 type QuoteContextType = {
   quoteObj: Quote;
@@ -29,6 +30,7 @@ export const QuoteContext = createContext<QuoteContextType>({
 export function QuoteProvider({ children }: { children: ReactNode }) {
   // current quote (displayed in ui)
   const [quoteObj, setQuoteObj] = useState<Quote>({
+    // initalize as empty object
     quote: "",
     authorName: "",
     link: "",
@@ -36,7 +38,19 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
   });
 
   // quote history (for saving in local storage)
-  const [quoteHistory, setQuoteHistory] = useState<Quote[]>([]);
+  const [quoteHistory, setQuoteHistory] = useState<Quote[]>(() => {
+    // initialize with localStorage
+    const inStorage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (inStorage) {
+      console.log("Da ist ja was");
+      try {
+        return JSON.parse(inStorage) as Quote[];
+      } catch (error) {
+        console.error("Error while parsing quoteHistory");
+      }
+    }
+    return [];
+  });
 
   // fetches a quote from api
   async function refreshQuote() {
