@@ -13,7 +13,6 @@ export async function getQuote(): Promise<QuoteResponse | null> {
     const response = await axios.get<QuoteResponse>(
       API_BASE + "/v1/quote?language=de"
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);

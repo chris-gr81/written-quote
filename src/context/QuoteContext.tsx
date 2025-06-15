@@ -42,7 +42,6 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
     // initialize with localStorage
     const inStorage = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (inStorage) {
-      console.log("Da ist ja was");
       try {
         return JSON.parse(inStorage) as Quote[];
       } catch (error) {
