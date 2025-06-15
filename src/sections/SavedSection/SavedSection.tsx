@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { QuoteContext } from "../../context/QuoteContext";
 import "./SavedSection.scss";
 import Button from "../../components/Button/Button";

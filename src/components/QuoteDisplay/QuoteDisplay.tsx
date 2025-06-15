@@ -4,7 +4,7 @@ import { QuoteContext } from "../../context/QuoteContext";
 
 export function QuoteDisplay() {
   const { quoteObj } = useContext(QuoteContext);
-  const { quote, authorName, link, authorLink } = quoteObj;
+  const { quote, authorName, authorLink } = quoteObj;
   return (
     <div className="quote-display">
       <p className="quote-display__quote">

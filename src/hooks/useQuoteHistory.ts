@@ -21,7 +21,7 @@ export function useQuoteHistory() {
   }
 
   function deleteQuote(index: number) {
-    const updated = quoteHistory.filter((item, currentIndex) => {
+    const updated = quoteHistory.filter((_, currentIndex) => {
       return currentIndex !== index;
     });
     setQuoteHistory(updated);
