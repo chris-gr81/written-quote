@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import "./QuoteDisplay.scss";
-import { QuoteContext } from "../../context/QuoteContext";
+import { useQuotes } from "../../context/QuoteContext";
 
 export function QuoteDisplay() {
-  const { quoteObj } = useContext(QuoteContext);
-  const { quote, authorName, authorLink } = quoteObj;
+  const { currentQuote } = useQuotes();
+  const { quote, authorName, authorLink } = currentQuote;
   return (
     <div className="quote-display">
       <p className="quote-display__quote">

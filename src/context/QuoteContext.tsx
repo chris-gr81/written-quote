@@ -1,14 +1,22 @@
-import React, { createContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { getQuote } from "../api/quotes";
 import type { Quote } from "../types/types";
 import { LOCAL_STORAGE_KEY } from "../constants/constants";
 
 type QuoteContextType = {
-  quoteObj: Quote;
-  setQuoteObj: React.Dispatch<React.SetStateAction<Quote>>;
+  currentQuote: Quote;
+  setCurrentQuote: (quote: Quote) => void;
   quoteHistory: Quote[];
-  setQuoteHistory: React.Dispatch<React.SetStateAction<Quote[]>>;
-  refreshQuote: () => Promise<void>;
+  setQuoteHistory: (history: Quote[]) => void;
+  loadQuote: () => Promise<void>;
+  saveQuote: () => void;
+  deleteQuote: (index: number) => void;
 };
 
 const defaultQuote: Quote = {
@@ -19,24 +27,19 @@ const defaultQuote: Quote = {
 };
 
 export const QuoteContext = createContext<QuoteContextType>({
-  quoteObj: defaultQuote,
-  setQuoteObj: () => {},
+  currentQuote: defaultQuote,
+  setCurrentQuote: () => {},
   quoteHistory: [],
   setQuoteHistory: () => {},
-  refreshQuote: async () => {},
+  loadQuote: async () => {},
+  saveQuote: () => {},
+  deleteQuote: () => {},
 });
 
 // custom provider
 export function QuoteProvider({ children }: { children: ReactNode }) {
   // current quote (displayed in ui)
-  const [quoteObj, setQuoteObj] = useState<Quote>({
-    // initalize as empty object
-    quote: "",
-    authorName: "",
-    link: "",
-    authorLink: "",
-  });
-
+  const [currentQuote, setCurrentQuote] = useState<Quote>(defaultQuote);
   // quote history (for saving in local storage)
   const [quoteHistory, setQuoteHistory] = useState<Quote[]>(() => {
     // initialize with localStorage
@@ -51,27 +54,64 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
     return [];
   });
 
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(quoteHistory));
+  }, [quoteHistory]);
+
   // fetches a quote from api
-  async function refreshQuote() {
+  async function loadQuote() {
     try {
       const data = await getQuote();
-      if (data) setQuoteObj(data);
+      if (data) setCurrentQuote(data);
     } catch (error) {
       console.error("Error while loading a quote from api", error);
     }
   }
 
+  // save current quote in history
+  function saveQuote() {
+    const duplicate = quoteHistory.some(
+      (qh) =>
+        qh.quote === currentQuote.quote &&
+        qh.authorName === currentQuote.authorName
+    );
+    if (duplicate) {
+      alert("Zitat wurde bereits gespeichert.");
+      return;
+    }
+    const updatedHistory = [currentQuote, ...quoteHistory];
+    setQuoteHistory(updatedHistory);
+  }
+
+  // deletes the quote with the corresponding index out of history
+  function deleteQuote(index: number) {
+    const updated = quoteHistory.filter((_, currentIndex) => {
+      return currentIndex !== index;
+    });
+    setQuoteHistory(updated);
+  }
+
   return (
     <QuoteContext.Provider
       value={{
-        quoteObj,
-        setQuoteObj,
+        currentQuote,
+        setCurrentQuote,
         quoteHistory,
         setQuoteHistory,
-        refreshQuote,
+        loadQuote,
+        saveQuote,
+        deleteQuote,
       }}
     >
       {children}
     </QuoteContext.Provider>
   );
+}
+
+export function useQuotes() {
+  const context = useContext(QuoteContext);
+  if (!context) {
+    throw new Error("useQuotes must be used within a <QuoteProvider>");
+  }
+  return context;
 }

@@ -1,10 +1,9 @@
-import type { JSX } from "react";
 import "./Button.scss";
 
 type ButtonProps = {
   btnType: string;
   btnText?: string;
-  btnIcon?: JSX.Element;
+  btnIcon?: React.ReactNode;
   onClick?: (...args: any[]) => any;
 };
 
